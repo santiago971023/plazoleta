@@ -2,18 +2,21 @@ package com.microservice_user.application.ports.out;
 
 import com.microservice_user.domain.RoleEnum;
 import com.microservice_user.domain.User;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
+@Repository
 public interface UserRepositoryPort {
 
-    User save(User save);
+    User save(User user);
 
     Optional<User> findByEmail(String email);
 
     Optional<User> findById(Long id);
 
-    boolean existByEmail(String email);
+    boolean existsByEmail(String email);
 
     boolean existsByDocumentNumber(String documentNumber);
 
