@@ -15,6 +15,9 @@ public class User {
     private LocalDate birthday;
     private RoleEnum role;
 
+    public User() {
+    }
+
     public User(Long id, String name, String lastname, String documentNumber, String email, String password, String phoneNumber, LocalDate birthday, RoleEnum role) {
         this.id = id;
         this.name = name;
