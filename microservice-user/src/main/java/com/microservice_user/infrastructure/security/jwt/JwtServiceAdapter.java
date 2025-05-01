@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
 
 import java.nio.charset.StandardCharsets;
 
+// Adaptador que implementa el Puerto de Salida 'TokenServicePort'. Sabe como generar y validar tokens JWT usando la libreria JJWT.
 
 @Component
 public class JwtServiceAdapter implements TokenServicePort {

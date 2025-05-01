@@ -2,10 +2,7 @@ package com.microservice_user.infrastructure.adapters.in.web;
 
 
 import com.microservice_user.application.DTOs.*;
-import com.microservice_user.application.ports.in.CreateClientUseCase;
-import com.microservice_user.application.ports.in.CreateEmployeeUseCase;
-import com.microservice_user.application.ports.in.CreateOwnerUseCase;
-import com.microservice_user.application.ports.in.LoginUseCase;
+import com.microservice_user.application.ports.in.*;
 import com.microservice_user.domain.User;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +19,7 @@ public class UserController {
     private final CreateClientUseCase createClientUseCase;
     private final CreateOwnerUseCase createOwnerUseCase;
     private final LoginUseCase loginUseCase;
+    private final AuthenticatedUserPort authenticatedUserPort;
 
     @PostMapping("/create-client")
     public ResponseEntity<User> createClient(@Valid @RequestBody CreateClientDTO clientDTO){
@@ -46,11 +44,22 @@ public class UserController {
         return ResponseEntity.ok(loginUseCase.login(loginRequestDTO));
     }
 
+
+
+    //   ------ ENDPOINTS DE PRUEBA ------------
     @GetMapping("/protected-test") // Un endpoint GET simple
     // Spring Security se encargara de verificar si hay un usuario autenticado gracias a anyRequest().authenticated()
     public ResponseEntity<String> protectedTestEndpoint() {
         // Si llegamos aqui, significa que el usuario fue autenticado correctamente por el filtro JWT
         return ResponseEntity.ok("Acceso concedido! Eres un usuario autenticado.");
     }
+
+    @GetMapping("/my-info")
+    public ResponseEntity<AuthenticatedUserDetails> getAuthenticatedUserInfo(){
+        AuthenticatedUserDetails userDetails = authenticatedUserPort.getAuthenticatedUserDetails();
+        return ResponseEntity.ok(userDetails);
+    }
+
+
 
 }

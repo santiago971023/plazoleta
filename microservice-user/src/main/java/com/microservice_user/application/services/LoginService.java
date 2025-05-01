@@ -12,6 +12,7 @@ import com.microservice_user.domain.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+// Implementa el Use Case (Puerto de Entrada) 'LoginUseCase'. Contiene la logica de negocio para autenticar un usuario y delegar la generacion del token.
 @Service
 public class LoginService implements LoginUseCase {
 

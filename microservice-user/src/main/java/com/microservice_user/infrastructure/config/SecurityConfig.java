@@ -36,14 +36,13 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/users/login").permitAll()
                         .requestMatchers(HttpMethod.GET, "/users/protected-test").hasRole(RoleEnum.CLIENTE.name())
 
-                        .anyRequest().denyAll())
+                        .anyRequest().authenticated())
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(Customizer.withDefaults())
                 .httpBasic(AbstractHttpConfigurer::disable);
         httpSecurity.addFilterBefore(jwtAuthenticationFilter, AnonymousAuthenticationFilter.class);
 
         return httpSecurity.build();
-
     }
 
     @Bean

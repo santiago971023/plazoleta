@@ -17,7 +17,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
+// Adaptador que implementa la interfaz 'UserDetailsService' de Spring Security. Sabe como cargar los detalles de un user (email, clave, roles) desde el repositorio de dominio.
 @Service
 @RequiredArgsConstructor
 public class UserDetailsServiceImpl implements UserDetailsService {
@@ -51,7 +51,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             System.out.println("El usuario encontrado NO tiene un rol asignado."); // Log 3b
         }
 
-        return new org.springframework.security.core.userdetails.User(
+        return new CustomSpringUserDetails(
+                userDomain.getId(),
                 userDomain.getEmail(),
                 userDomain.getPassword(),
                 authorityList
