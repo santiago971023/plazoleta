@@ -27,6 +27,10 @@
 	</scm>
 	<properties>
 		<java.version>17</java.version>
+<<<<<<< HEAD
+=======
+		<spring-cloud.version>2024.0.1</spring-cloud.version>
+>>>>>>> 10352e266cac05aa46b170167b17643ccc591305
 	</properties>
 	<dependencies>
 		<dependency>
