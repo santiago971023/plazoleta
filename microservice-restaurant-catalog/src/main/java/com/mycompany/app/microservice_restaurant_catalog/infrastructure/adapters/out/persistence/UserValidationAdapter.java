@@ -9,12 +9,15 @@ import org.slf4j.Logger; // Para logging
 import org.slf4j.LoggerFactory;
 
 @Service
-@RequiredArgsConstructor
 public class UserValidationAdapter implements UserValidationPort {
 
     private static final Logger log = LoggerFactory.getLogger(UserValidationAdapter.class); // Logger
 
     private final UserFeignClient userFeignClient;
+
+    public UserValidationAdapter(UserFeignClient userFeignClient) {
+        this.userFeignClient = userFeignClient;
+    }
 
     @Override
     public boolean isValidOwner(Long id) {
