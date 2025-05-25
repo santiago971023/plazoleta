@@ -2,6 +2,7 @@ package com.microservice_user.infrastructure.adapters.in.web;
 
 
 import com.microservice_user.application.DTOs.*;
+import com.microservice_user.application.DTOs.response.OwnerValidationResponseDTO;
 import com.microservice_user.application.ports.in.*;
 import com.microservice_user.domain.User;
 import jakarta.validation.Valid;
@@ -20,6 +21,7 @@ public class UserController {
     private final CreateOwnerUseCase createOwnerUseCase;
     private final LoginUseCase loginUseCase;
     private final AuthenticatedUserPort authenticatedUserPort;
+    private final ValidateOwnerRoleUseCase validateOwnerRoleUseCase;
 
     @PostMapping("/create-client")
     public ResponseEntity<User> createClient(@Valid @RequestBody CreateClientDTO clientDTO){
@@ -42,6 +44,16 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity<LoginResponseDTO> login(@Valid @RequestBody LoginRequestDTO loginRequestDTO){
         return ResponseEntity.ok(loginUseCase.login(loginRequestDTO));
+    }
+
+
+    //   --------- ENDPOINTS PARA COMUNICACIÓN ENTRE MICROSERVICIOS ----------
+    @GetMapping("/internal/validate-owner/{userId}")
+    public OwnerValidationResponseDTO validateOwner(@PathVariable("userId") Long id){
+        boolean result = validateOwnerRoleUseCase.validateRole(id);
+        OwnerValidationResponseDTO ownerValidationResponseDTO = new OwnerValidationResponseDTO();
+        ownerValidationResponseDTO.setValidOwner(result);
+        return ownerValidationResponseDTO;
     }
 
 

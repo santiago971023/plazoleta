@@ -3,9 +3,11 @@ package com.mycompany.app.microservice_restaurant_catalog.application.services;
 import com.mycompany.app.microservice_restaurant_catalog.application.dtos.CreateRestaurantRequestDTO;
 import com.mycompany.app.microservice_restaurant_catalog.application.exception.ErrorMessagesApplication;
 import com.mycompany.app.microservice_restaurant_catalog.application.exception.NitAlreadyExistsException;
+import com.mycompany.app.microservice_restaurant_catalog.application.exception.OwnerNotFoundOrInvalidRoleException;
 import com.mycompany.app.microservice_restaurant_catalog.application.exception.RestaurantNameAlreadyExistsException;
 import com.mycompany.app.microservice_restaurant_catalog.application.ports.in.CreateRestaurantUseCase;
 import com.mycompany.app.microservice_restaurant_catalog.application.ports.out.RestaurantRepositoryPort;
+import com.mycompany.app.microservice_restaurant_catalog.application.ports.out.UserValidationPort;
 import com.mycompany.app.microservice_restaurant_catalog.domain.Restaurant;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +15,7 @@ import org.springframework.stereotype.Service;
 public class RestaurantService implements CreateRestaurantUseCase {
 
     private final RestaurantRepositoryPort restaurantRepositoryPort;
+    private final UserValidationPort userValidationPort;
 
     // Este servicio NECESITARA saber quien es el usuario autenticado para validar el rol (PROPIETARIO)
     // Necesitaremos alguna forma de acceder a la info del user autenticado desde este microservicio.
@@ -21,8 +24,9 @@ public class RestaurantService implements CreateRestaurantUseCase {
     // Si tuvieras AuthenticatedUserPort AQUI (en este microservicio), lo inyectarias asi:
     // private final AuthenticatedUserPort authenticatedUserPort; // <-- Esto seria AQUI si el puerto estuviera en este microservicio
 
-    public RestaurantService(RestaurantRepositoryPort restaurantRepositoryPort) {
+    public RestaurantService(RestaurantRepositoryPort restaurantRepositoryPort, UserValidationPort userValidationPort) {
         this.restaurantRepositoryPort = restaurantRepositoryPort;
+        this.userValidationPort = userValidationPort;
     }
 
     @Override
@@ -35,6 +39,10 @@ public class RestaurantService implements CreateRestaurantUseCase {
 
         if(restaurantRepositoryPort.existsByNit(createRestaurantRequestDTO.getNit())){
             throw new NitAlreadyExistsException(ErrorMessagesApplication.NIT_ALREADY_EXIST.getMessage());
+        }
+
+        if(!userValidationPort.isValidOwner(createRestaurantRequestDTO.getOwnerId())){
+            throw new OwnerNotFoundOrInvalidRoleException(ErrorMessagesApplication.OWNER_NOT_FOUND_OR_ROLED_INVALID.getMessage());
         }
 
         Restaurant newRestaurant = new Restaurant();

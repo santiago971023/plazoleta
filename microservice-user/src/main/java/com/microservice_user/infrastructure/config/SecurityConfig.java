@@ -35,7 +35,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/users/create-owner").permitAll()
                         .requestMatchers(HttpMethod.POST, "/users/login").permitAll()
                         .requestMatchers(HttpMethod.GET, "/users/protected-test").hasRole(RoleEnum.CLIENTE.name())
-
+                        .requestMatchers(HttpMethod.GET, "/users/internal/validate-owner/**").permitAll()
                         .anyRequest().authenticated())
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(Customizer.withDefaults())
