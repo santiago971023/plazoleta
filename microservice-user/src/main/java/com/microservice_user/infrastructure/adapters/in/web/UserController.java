@@ -3,6 +3,8 @@ package com.microservice_user.infrastructure.adapters.in.web;
 
 import com.microservice_user.application.DTOs.*;
 import com.microservice_user.application.DTOs.response.OwnerValidationResponseDTO;
+import com.microservice_user.application.DTOs.response.UserIdResponseDTO;
+import com.microservice_user.application.exception.UserNotFoundByEmailException;
 import com.microservice_user.application.ports.in.*;
 import com.microservice_user.domain.User;
 import jakarta.validation.Valid;
@@ -22,6 +24,7 @@ public class UserController {
     private final LoginUseCase loginUseCase;
     private final AuthenticatedUserPort authenticatedUserPort;
     private final ValidateOwnerRoleUseCase validateOwnerRoleUseCase;
+    private final GetUserIdByEmailUseCase getUserIdByEmailUseCase;
 
     @PostMapping("/create-client")
     public ResponseEntity<User> createClient(@Valid @RequestBody CreateClientDTO clientDTO){
@@ -48,12 +51,21 @@ public class UserController {
 
 
     //   --------- ENDPOINTS PARA COMUNICACIÓN ENTRE MICROSERVICIOS ----------
+    // Este método se encarga de decirle a mi capa de restaurants y products si el usuario creador tiene rol de creador
     @GetMapping("/internal/validate-owner/{userId}")
     public OwnerValidationResponseDTO validateOwner(@PathVariable("userId") Long id){
         boolean result = validateOwnerRoleUseCase.validateRole(id);
         OwnerValidationResponseDTO ownerValidationResponseDTO = new OwnerValidationResponseDTO();
         ownerValidationResponseDTO.setValidOwner(result);
         return ownerValidationResponseDTO;
+    }
+
+    // Este método se encarga de decirle a mi capa de restaurants y products el id de un usuario (usando el email)
+    @GetMapping("/internal/id-by-email")
+    public ResponseEntity<UserIdResponseDTO> getUserIdByEmail(@RequestParam String email) {
+        Long userId = getUserIdByEmailUseCase.getUserIdByEmail(email)
+                .orElseThrow(() -> new UserNotFoundByEmailException("User not found with email " + email));
+        return ResponseEntity.ok(new UserIdResponseDTO(userId));
     }
 
 

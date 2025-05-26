@@ -21,4 +21,6 @@ public interface UserRepositoryPort {
     boolean existsByDocumentNumber(String documentNumber);
 
     Optional<User> findByIdAndRole(Long id, RoleEnum role);
+
+
 }

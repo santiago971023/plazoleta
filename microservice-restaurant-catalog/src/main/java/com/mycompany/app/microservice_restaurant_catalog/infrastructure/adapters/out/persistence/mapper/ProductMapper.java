@@ -1,6 +1,8 @@
 package com.mycompany.app.microservice_restaurant_catalog.infrastructure.adapters.out.persistence.mapper;
 
+import com.mycompany.app.microservice_restaurant_catalog.domain.Product;
 import com.mycompany.app.microservice_restaurant_catalog.domain.Restaurant;
+import com.mycompany.app.microservice_restaurant_catalog.infrastructure.adapters.out.persistence.entities.ProductEntity;
 import com.mycompany.app.microservice_restaurant_catalog.infrastructure.adapters.out.persistence.entities.RestaurantEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
@@ -10,16 +12,15 @@ import java.util.List;
 @Mapper(componentModel = "spring",
         unmappedSourcePolicy = ReportingPolicy.IGNORE,
         unmappedTargetPolicy = ReportingPolicy.IGNORE)
-public interface RestaurantMapper {
+public interface ProductMapper {
 
-    // Método para convertir un objeto de tipo Restaurant (de dominio) a un objeto de tipo RestaurantEntity
-    RestaurantEntity toRestaurantEntity(Restaurant domainRestaurant);
 
-    // Método para convertir RestaurantEntity a un objeto Restaurant (de dominio)
-    Restaurant toRestaurant(RestaurantEntity restaurantEntity);
+    ProductEntity toProductEntity(Product product);
+
+    Product toProduct(ProductEntity productEntity);
 
     // Metodos para mapear listas, ej:
-    List<Restaurant> toRestaurantList(List<RestaurantEntity> restaurantEntityList);
-    List<RestaurantEntity> toRestaurantEntityList(List<Restaurant> domainRestaurantList);
+    List<Product> toProductList(List<ProductEntity> productEntityList);
+    List<ProductEntity> toProductEntityList(List<Product> domainProductList);
 
 }
