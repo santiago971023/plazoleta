@@ -23,6 +23,7 @@
     <module>microservice-config</module>
     <module>microservice-user</module>
     <module>microservice-restaurant-catalog</module>
+    <module>microservice-order</module>
   </modules>
 
   <properties>
