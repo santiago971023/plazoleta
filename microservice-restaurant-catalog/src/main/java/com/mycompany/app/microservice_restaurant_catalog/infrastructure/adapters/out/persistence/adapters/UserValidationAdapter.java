@@ -1,12 +1,15 @@
-package com.mycompany.app.microservice_restaurant_catalog.infrastructure.adapters.out.persistence;
+package com.mycompany.app.microservice_restaurant_catalog.infrastructure.adapters.out.persistence.adapters;
 
+import com.mycompany.app.microservice_restaurant_catalog.application.dtos.internal.UserIdResponseDTO;
 import com.mycompany.app.microservice_restaurant_catalog.application.ports.out.UserValidationPort;
 import com.mycompany.app.microservice_restaurant_catalog.infrastructure.feign.client.UserFeignClient;
 import com.mycompany.app.microservice_restaurant_catalog.infrastructure.feign.client.dto.OwnerValidationResponseDTO;
-import lombok.RequiredArgsConstructor;
+import feign.FeignException;
 import org.springframework.stereotype.Service;
 import org.slf4j.Logger; // Para logging
 import org.slf4j.LoggerFactory;
+
+import java.util.Optional;
 
 @Service
 public class UserValidationAdapter implements UserValidationPort {
@@ -39,6 +42,18 @@ public class UserValidationAdapter implements UserValidationPort {
             // Manejo de errores si la llamada Feign falla (ej. microservice-user caido, error de red, etc.)
             log.error("Error callamdo UserFeignClient para validar User {}: {}", id, e.getMessage(), e);
             return false;
+        }
+    }
+
+    @Override
+    public Optional<Long> getUserIdByEmail(String email) {
+        try {
+            UserIdResponseDTO response = userFeignClient.getUserIdByEmail(email);
+            return Optional.ofNullable(response.getId());
+        }catch (FeignException.NotFound e){
+            return Optional.empty();
+        }catch (FeignException e){
+            throw new RuntimeException("Error communicating with user service.");
         }
     }
 }

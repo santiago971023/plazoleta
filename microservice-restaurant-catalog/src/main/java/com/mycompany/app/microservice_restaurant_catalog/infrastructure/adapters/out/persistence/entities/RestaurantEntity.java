@@ -1,4 +1,4 @@
-package com.mycompany.app.microservice_restaurant_catalog.infrastructure.adapters.out.persistence;
+package com.mycompany.app.microservice_restaurant_catalog.infrastructure.adapters.out.persistence.entities;
 
 import jakarta.persistence.*;
 import lombok.*;

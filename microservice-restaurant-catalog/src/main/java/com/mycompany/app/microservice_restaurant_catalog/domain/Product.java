@@ -7,13 +7,13 @@ public class Product {
     private Long id;
     private String name;
     private String description;
-    private BigDecimal price;
+    private Double price;
     private String urlImage;
     private CategoryEnum category;
     private Long restaurantId;
     private boolean active;
 
-    public Product(Long id, String name, String description, BigDecimal price, String urlImage, CategoryEnum category, Long restaurantId, boolean active) {
+    public Product(Long id, String name, String description, Double price, String urlImage, CategoryEnum category, Long restaurantId, boolean active) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -51,11 +51,11 @@ public class Product {
         this.description = description;
     }
 
-    public BigDecimal getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(BigDecimal price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 
