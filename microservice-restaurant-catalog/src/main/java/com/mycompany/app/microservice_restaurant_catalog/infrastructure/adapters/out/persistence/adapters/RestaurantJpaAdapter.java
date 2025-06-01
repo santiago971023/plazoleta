@@ -5,12 +5,13 @@ import com.mycompany.app.microservice_restaurant_catalog.domain.Restaurant;
 import com.mycompany.app.microservice_restaurant_catalog.infrastructure.adapters.out.persistence.entities.RestaurantEntity;
 import com.mycompany.app.microservice_restaurant_catalog.infrastructure.adapters.out.persistence.mapper.RestaurantMapper;
 import com.mycompany.app.microservice_restaurant_catalog.infrastructure.adapters.out.persistence.repository.RestaurantJpaRepository;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
 
-@Repository
+@Component
 public class RestaurantJpaAdapter implements RestaurantRepositoryPort {
 
     private final RestaurantJpaRepository restaurantJpaRepository;

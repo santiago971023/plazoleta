@@ -34,7 +34,7 @@ public class ProductEntity {
     private Long restaurantId;
 
     @Column(name = "image_url", nullable = false) // Campo para la URL de la imagen
-    private String imageUrl;
+    private String urlImage;
 
     @Column(name = "active", nullable = false)
     private Boolean active;

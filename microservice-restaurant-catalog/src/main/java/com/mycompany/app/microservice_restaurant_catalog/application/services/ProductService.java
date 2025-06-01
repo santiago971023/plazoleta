@@ -43,14 +43,13 @@ public class ProductService implements CreateProductUseCase {
         product.setName(requestDTO.getName());
         product.setDescription(requestDTO.getDescription());
         product.setPrice(requestDTO.getPrice());
-        product.setUrlImage(requestDTO.getImageUrl());
+        product.setUrlImage(requestDTO.getUrlImage());
         product.setRestaurantId(requestDTO.getRestaurantId());
 
         try{
-
-            product.setCategory(CategoryEnum.valueOf(requestDTO.getCategory().toUpperCase()));
+            product.setCategory(CategoryEnum.valueOf(requestDTO.getCategory()));
         }catch (IllegalArgumentException e){
-            throw new NoDataFoundException("Category not fund or is invalid");
+            throw new NoDataFoundException("Category not found or is invalid");
         }
 
         product.setActive(true);

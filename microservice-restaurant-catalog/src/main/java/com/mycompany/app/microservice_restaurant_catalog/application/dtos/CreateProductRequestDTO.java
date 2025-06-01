@@ -25,7 +25,7 @@ public class CreateProductRequestDTO {
     private String description;
 
     @NotBlank(message = "La URL de la imagen del plato es obligatoria")
-    private String imageUrl;
+    private String urlImage;
 
     @NotBlank(message = "La categoría del plato es obligatoria")
     private String category; // Representado como String aquí, validado/convertido a CategoryEnum en el servicio
