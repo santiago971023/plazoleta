@@ -7,26 +7,23 @@ public class OrderItem {
     private Long productId;
     private String productName;
     private Integer quantity;
-    private String notes;
     private BigDecimal unitPrice;
 
-    public OrderItem(Long id, Long productId, String productName, Integer quantity, String notes, BigDecimal unitPrice) {
+    public OrderItem(Long id, Long productId, String productName, Integer quantity, BigDecimal unitPrice) {
         this.id = id;
         this.productId = productId;
         this.productName = productName;
         this.quantity = quantity;
-        this.notes = notes;
         this.unitPrice = unitPrice;
     }
 
     public OrderItem() {
     }
 
-    public OrderItem(Long productId, String productName, Integer quantity, String notes, BigDecimal unitPrice) {
+    public OrderItem(Long productId, String productName, Integer quantity, BigDecimal unitPrice) {
         this.productId = productId;
         this.productName = productName;
         this.quantity = quantity;
-        this.notes = notes;
         this.unitPrice = unitPrice;
     }
 
@@ -64,14 +61,6 @@ public class OrderItem {
 
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
-    }
-
-    public String getNotes() {
-        return notes;
-    }
-
-    public void setNotes(String notes) {
-        this.notes = notes;
     }
 
     public BigDecimal getUnitPrice() {
