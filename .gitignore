@@ -1,5 +1,26 @@
 # Default ignored files
-/shelf/
-/.idea/workspace.xml
+# .gitignore scoped to the .idea/ directory
+# Keeps user-specific IntelliJ settings out of version control
 
-.idea/
+# Workspace and local config files
+workspace.xml
+tasks.xml
+compiler.xml
+uiDesigner.xml
+vcs.xml
+
+# Shelved changes and custom dictionaries
+shelf/
+dictionaries/
+
+# Database tools and web servers (user-specific)
+dataSources/
+dataSources.xml
+dataSources.local.xml
+dataSources.*.xml
+dataSources.serialized
+sqllogs/
+webServers.xml
+
+# Statistics and usage logs
+usage.statistics.xml
