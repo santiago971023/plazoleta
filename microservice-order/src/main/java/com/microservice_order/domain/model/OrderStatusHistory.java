@@ -24,12 +24,6 @@ public class OrderStatusHistory {
         this.durationInMinutes = durationInMinutes;
     }
 
-    public OrderStatusHistory(Long orderId, OrderStatus status, LocalDateTime startedAt) {
-        this.orderId = orderId;
-        this.status = status;
-        this.startedAt = startedAt;
-    }
-
     public void calculateAndSetDurationInMinutes() {
         if (startedAt != null && endedAt != null) {
             durationInMinutes = Duration.between(startedAt, endedAt).toMinutes();

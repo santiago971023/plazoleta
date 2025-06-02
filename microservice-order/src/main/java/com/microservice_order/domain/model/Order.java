@@ -2,14 +2,18 @@ package com.microservice_order.domain.model;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Order {
 
     private Long id;
     private Long clientId;
+    private String clientName;
     private Long restaurantId;
+    private String restaurantName;
     private Long assignedEmployeeId;
+    private String employeeName;
     private LocalDateTime createdAt;
     private OrderStatus status;
     private List<OrderItem> items;
@@ -21,11 +25,17 @@ public class Order {
     public Order() {
     }
 
-    public Order(Long id, Long clientId, Long restaurantId, Long assignedEmployeeId, LocalDateTime createdAt, OrderStatus status, List<OrderItem> items, List<OrderStatusHistory> statusHistory, BigDecimal totalPrice, String pickupPin, String notes) {
+    public Order(Long id, Long clientId, String clientName, Long restaurantId, String restaurantName,
+                 Long assignedEmployeeId, String employeeName, LocalDateTime createdAt, OrderStatus status,
+                 List<OrderItem> items, List<OrderStatusHistory> statusHistory, BigDecimal totalPrice, String pickupPin,
+                 String notes) {
         this.id = id;
         this.clientId = clientId;
+        this.clientName = clientName;
         this.restaurantId = restaurantId;
+        this.restaurantName = restaurantName;
         this.assignedEmployeeId = assignedEmployeeId;
+        this.employeeName = employeeName;
         this.createdAt = createdAt;
         this.status = status;
         this.items = items;
@@ -33,6 +43,32 @@ public class Order {
         this.totalPrice = totalPrice;
         this.pickupPin = pickupPin;
         this.notes = notes;
+    }
+
+    public void calculateAndSetTotalPrice() {
+        totalPrice = BigDecimal.ZERO;
+        if (items != null) {
+            for (OrderItem item : items) {
+                totalPrice = totalPrice.add(item.getSubtotal());
+            }
+        }
+        // TODO: lanzar excepción en else block si llega a ser necesario
+    }
+
+    public void addOrderItem(OrderItem item) {
+        // TODO: deberíamos validar que ni el item ni el listado de items sean nulos
+        items.add(item);
+    }
+
+    public void deleteOrderItem(Long itemId) {
+        // TODO: también deberíamos validar excepciones aquí
+        items.removeIf(item -> itemId.equals(item.getId()));
+    }
+
+    // TODO: creo que este método si es necesario. Tendríamos que revisar si sería necesario crear el de eliminar
+    public void addStatusHistory(OrderStatusHistory statusHistory) {
+        // TODO: también deberíamos validar excepciones aquí
+        this.statusHistory.add(statusHistory);
     }
 
     public Long getId() {
@@ -51,6 +87,14 @@ public class Order {
         this.clientId = clientId;
     }
 
+    public String getClientName() {
+        return clientName;
+    }
+
+    public void setClientName(String clientName) {
+        this.clientName = clientName;
+    }
+
     public Long getRestaurantId() {
         return restaurantId;
     }
@@ -59,12 +103,28 @@ public class Order {
         this.restaurantId = restaurantId;
     }
 
+    public String getRestaurantName() {
+        return restaurantName;
+    }
+
+    public void setRestaurantName(String restaurantName) {
+        this.restaurantName = restaurantName;
+    }
+
     public Long getAssignedEmployeeId() {
         return assignedEmployeeId;
     }
 
     public void setAssignedEmployeeId(Long assignedEmployeeId) {
         this.assignedEmployeeId = assignedEmployeeId;
+    }
+
+    public String getEmployeeName() {
+        return employeeName;
+    }
+
+    public void setEmployeeName(String employeeName) {
+        this.employeeName = employeeName;
     }
 
     public LocalDateTime getCreatedAt() {

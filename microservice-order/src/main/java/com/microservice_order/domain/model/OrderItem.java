@@ -9,18 +9,11 @@ public class OrderItem {
     private Integer quantity;
     private BigDecimal unitPrice;
 
-    public OrderItem(Long id, Long productId, String productName, Integer quantity, BigDecimal unitPrice) {
-        this.id = id;
-        this.productId = productId;
-        this.productName = productName;
-        this.quantity = quantity;
-        this.unitPrice = unitPrice;
-    }
-
     public OrderItem() {
     }
 
-    public OrderItem(Long productId, String productName, Integer quantity, BigDecimal unitPrice) {
+    public OrderItem(Long id, Long productId, String productName, Integer quantity, BigDecimal unitPrice) {
+        this.id = id;
         this.productId = productId;
         this.productName = productName;
         this.quantity = quantity;
